@@ -7,25 +7,8 @@ include \masm32\include\kernel32.inc
 includelib \masm32\lib\masm32.lib
 includelib \masm32\lib\kernel32.lib
 include tables.asm
-
-.DATA
-    enrollSystem db 10, 9, 9, 9, 9, 9, "Student Enrollment System", 10, 10, 0
-    accountNum db  9, "Account Number: ", 0
-    studName db 9, "Full Name: ", 0
-    year db  9, "Year: ", 0
-    program db 9, "Program: Bachelor of Science in Computer Science", 0
-    department db 10, 9, "Department: College of Computing Education", 0
-    selectPrompt db 10, 9, "Select Year and Program: ", 10, 9,
-                 "[a] 1st Year / 1st Sem", 10, 9,
-                 "[b] 1st Year / 2nd Sem", 10, 9,
-                 "[c] 2nd Year / 1st Sem", 10, 9,
-                 "[d] 2nd Year / 2nd Sem", 10, 9, 
-                 "[e] 3rd Year / 1st Sem", 10, 9, 
-                 "[f] 3rd Year / 2nd Sem", 10, 9, 
-                 "[g] 4th Year / 1st Sem", 10, 9, 
-                 "[h] 4th Year / 2nd Sem", 10, 9, 0
-    newline db 10, 10, 0
-    tab db 9, 0
+include enroll.asm
+include prospectus.asm
 
 .data?
     choices db 100 dup(?)
@@ -50,24 +33,78 @@ start:
     ; invoke StdIn, addr yearIn, 100
     ; invoke StdOut, addr program
     ; invoke StdOut, addr department
-    
 
-    invoke StdOut, addr newline 
-    invoke StdOut, addr newline 
-    call firstYrFirstSemTable
-    call firstYrSecondSemTable
-    call secondYrFirstSemTable
-    call secondYrSecondSemTable
-    call thirdYrFirstSemTable
-    call thirdYrSecondSemTable
-    call thirdYrSummerTable
-    call fourthYrFirstSemTable
-    call fourthYrSecondSemTable
-    invoke StdOut, addr newline
-    invoke StdOut, addr selectPrompt
+    call prospectus
+    
+    input_loop:
+    invoke ClearScreen
+    invoke StdOut, addr selectPrompt1
+    invoke StdOut, addr selectPrompt2
+    
     invoke StdIn, addr choices, 100
 
-    .if choices == 'a'
+    .if choices == "A" || choices == "a"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call firstYrFirstSemEnroll
+        invoke StdOut, addr newline
+        
+        invoke StdOut, addr subjectPrompt
+        invoke StdIn, addr subject, 100
+
+        call selectToEnrollFirstYrFirstSem
+
+    .elseif choices == "B" || choices == "b"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call firstYrSecondSemEnroll
+        invoke StdOut, addr newline
+    .elseif choices == "C" || choices == "c"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call secondYrFirstSemEnroll
+        invoke StdOut, addr newline
+     .elseif choices == "D" || choices == "d"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call secondYrSecondSemEnroll
+        invoke StdOut, addr newline
+     .elseif choices == "E" || choices == "e"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call thirdYrFirstSemEnroll
+        invoke StdOut, addr newline  
+     .elseif choices == "F" || choices == "f"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call thirdYrSecondSemEnroll
+        invoke StdOut, addr newline   
+     .elseif choices == "G" || choices == "g"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call thirdYrSummerEnroll
+        invoke StdOut, addr newline   
+     .elseif choices == "H" || choices == "h"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call fourthYrFirstSemEnroll
+        invoke StdOut, addr newline   
+    .elseif choices == "I" || choices == "i"
+        invoke StdOut, addr horLine
+        invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        call fourthYrSecondSemEnroll
+        invoke StdOut, addr newline     
+    .else
+        jmp input_loop
     .endif
 
     invoke ExitProcess, 0
