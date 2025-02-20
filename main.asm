@@ -57,8 +57,13 @@ start:
     call firstYrFirstSemTable
     call firstYrSecondSemTable
     call secondYrFirstSemTable
+    call secondYrSecondSemTable
+    call thirdYrFirstSemTable
+    call thirdYrSecondSemTable
+    call thirdYrSummerTable
+    call fourthYrFirstSemTable
+    call fourthYrSecondSemTable
     invoke StdOut, addr newline
-
     invoke StdOut, addr selectPrompt
     invoke StdIn, addr choices, 100
 
