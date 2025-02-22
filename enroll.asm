@@ -1,3 +1,4 @@
+
 .CODE
 
 firstYrFirstSemEnroll PROC
@@ -65,39 +66,18 @@ fourthYrSecondSemEnroll PROC
     ret
 fourthYrSecondSemEnroll ENDP
 
-
-totalUnitsEnrolled PROC
-	invoke StdOut, addr horLine
-	invoke StdOut, addr totalUnits
-	invoke StdOut, addr horLine
-	ret
-totalUnitsEnrolled ENDP
+showTotalUnitsEnrolled PROC
+    invoke StdOut, addr horLine
+    invoke StdOut, addr totalUnits
+    invoke StdOut, addr horLine
+    ret
+showTotalUnitsEnrolled ENDP
 
 selectToEnrollFirstYrFirstSem PROC
-	invoke StdOut, addr horLine
-	invoke StdOut, addr header
-	invoke StdOut, addr horLine
 
-	invoke StdOut, addr "1. GE 1"
-    invoke StdOut, addr "2. GE 2"
-    invoke StdOut, addr "3. NSTP 1"
-    invoke StdOut, addr "4. CCE 101"
-    invoke StdOut, addr "5. GPE 1"
-    invoke StdOut, addr "6. GE 4"
-    invoke StdOut, addr "7. CCE 109"
-    invoke StdOut, addr "8. GE 7"
-    invoke StdOut, addr "9. GE 5"
-    invoke StdOut, addr "10. GE 3"
-    invoke StdOut, addr "11. CS 25"
+    invoke StdOut, addr sub1
+    invoke StdOut, addr sub2
+    invoke StdOut, addr sub3
 
-
-	.if subject == "1"
-        invoke StdOut, addr ge1
-        call totalUnitsEnrolled
-    .endif
-    .if subject == "2"
-        invoke StdOut, addr ge2
-    .endif
-	ret
-	invoke StdOut, newline
+    ret
 selectToEnrollFirstYrFirstSem ENDP

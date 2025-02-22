@@ -1,6 +1,8 @@
 
 .DATA
     enrollSystem db 10, 9, 9, 9, 9, 9, "Student Enrollment System", 10, 10, 0
+    officiallyEnrolled db 10, 10, 10, 9, 9, 9, 9, "Congratulations! You are officially enrolled", 10, 10, 0
+    studentEval db 10, 9, 9, 9, 9, 9, "Student Evaluation Form", 10, 10, 0
     accountNum db  9, "Account Number: ", 0
     studName db 9, "Full Name: ", 0
     year db  9, "Year: ", 0
@@ -16,11 +18,15 @@
                  "[g] 3rd Year / Summer", 10, 9, 
                  "[h] 4th Year / 1st Sem", 10, 9, 0
 	selectPrompt2 db "[i] 4th Year / 2nd Sem", 10, 9, 0
-	subjectPrompt db 10, 9, "Select the Corresponding Subject [Number] to Enroll: ", 0
+	subjectPrompt db 10, 10, 9, "Select the Subject [Letter] to Enroll separated by spaces: ", 0
     newline db 10, 10, 0
     tab db 9, 0
-    studentEval db 10, 9, 9, 9, 9, 9, "Student Evaluation Form", 10, 10, 0
+   
     header db 10, 9, "|   Title   |  Unit |                    Description                    |  Pre/Co-requisites  |", 0
+    totalUnitsEnrolled dd 0
+    tempTotalUnitsEnrolled db 100 dup(?)
+    invalidInputtMsg db 10, 10, 9, "Invalid input! Please enter the correct subject letter", 10, 0
+    limitedUnitsMsg db 10, 10, 9, "You have reached the maximum number of units!", 10, 0
 	
     ; title = 11 (excluded vertical tab) char
     ; unit = 7 (excluded vertical tab) char
@@ -28,7 +34,8 @@
     ; prerequisites = 21 char (excluded vertical tab)
 	; total = 84 (excluded vertical tab) char
     
-    totalUnits db 10, 9, "|  Total Units                                                                                |", 0
+    totalUnits db 10, 9, "|  Total Units Enrolled: ", 0
+    verticalTab db "                                                                   |", 0
     horLine db 10, 9, "-----------------------------------------------------------------------------------------------", 0
     firstYear1stSem db 10, 9, "|  1st Year / 1st Sem                                                                         |", 0
     ge1 db 10, 9, "|    GE 1   |  3.0  |              UNDERSTANDING THE SELF               |                     |", 0
@@ -115,16 +122,81 @@
     cs23 db 10, 9, "|  CS 23  |  6.0  |                 CS THESIS WRITING 2                 |       CS 18/L       |", 0    
     cs22 db 10, 9, "|  CS 22  |  3.0  |          INFORMATION ASSURANCE AND SECURITY         |       CS 21/L       |", 0    
 
+    ;20 char 
+    sub1 db 10, 9, "[A] GE 1               [D] CCE 101            [G] CCE 109            [J] GE 3", 0
+    sub2 db 10, 9, "[B] GE 2               [E] GPE 1              [H] GE 7               [K] CS25", 0
+    sub3  db 10, 9, "[C] NSTP 1             [F] GE 4               [I] GE 5", 0
 
-    GE1 db "1. GE 1", 0
-    GE2 db "2. GE 2", 0
-    NSTP1 db "3. NSTP 1", 0
-    CCE101 db "4. CCE 101", 0
-    GPE1 db "5. GPE 1", 0
-    GE4 db "6. GE 4", 0
-    CCE109 db "7. CCE 109", 0
-    GE7 db "8. GE 7", 0
-    GE5 db "9. GE 5", 0
-    GE3 db "10. GE 3", 0
-    CS25 db "11. CS 25", 0
+
+    sub4 db 10, 9, "[A] UGE               [D] GPE 2              [G] NSTP 2             [J] GE 6", 0
+    sub5 db 10, 9, "[B] GE 5               [E] MTH 101            [H] CCE 107            [K] GE 9", 0
+    sub6  db 10, 9, "[C] GE 3               [F] CS 25              [I] GE 8", 0
+
+    sub7 db 10, 9, "[A] CS 3               [D] GPE 3              [G] CST 4              [J] CS 8", 0
+    sub8 db 10, 9, "[B] GE 8               [E] MTH 105            [H] CCE 105            ", 0
+    sub9 db 10, 9, "[C] GE 6               [F] GE 9               [I] CS 26", 0
+
+
+    sub10 db 10, 9, "[A] BSM 312            [D] MTH 103            [G] GPE 4              [J] GE 11", 0
+    sub11 db 10, 9, "[B] CS 6               [E] HCI 101            [H] CCE 104            [K] GE 15", 0
+    sub12 db 10, 9, "[C] BSM 222            [F] CS 8               [I] CST 5", 0
+
+    sub13 db 10, 9, "[A] CSE 10             [D] PHYS 101           [G] CSE 7              [J] UGE 2", 0
+    sub14 db 10, 9, "[B] CS 12              [E] BSM 325            [H] GE 15              ", 0
+    sub15 db 10, 9, "[C] GE 11              [F] CST 9              [I] GE 20", 0
+
+    sub16 db 10, 9, "[A] CS 15              [D] UGE 2              [G] CS 17              ", 0
+    sub17 db 10, 9, "[B] GE 20              [E] PHYS 102           [H] CS 11              ", 0
+    sub18 db 10, 9, "[C] CSE 13             [F] CST 14             ", 0
+
+    sub19 db 10, 9, "[A] CS 16              ", 0
+    sub20 db 10, 9, "[B] CS 20              ", 0
+    
+    sub21 db 10, 9, "[A] CS 18              [D] CS 21              ", 0
+    sub22 db 10, 9, "[B] CCE 106            [E] CS 24              ", 0
+    sub23 db 10, 9, "[C] CAED 500C          [F] CS 19              ", 0
+
+    sub24 db 10, 9, "[A] CS 23              ", 0
+    sub25 db 10, 9, "[B] CS 22              ", 0
+
+    subjectPointers1 dd offset ge1, offset ge2, offset nstp1, offset cce101, offset gpe1
+                    dd offset ge4, offset cce109, offset ge7, offset ge5, offset ge3, offset cs25
+    
+    subjectPointers2 dd offset uge1, offset ge5, offset ge3, offset gpe2, offset mth101
+                    dd offset cs25, offset nstp2, offset cce107, offset ge8, offset ge6, offset ge9
+
+    subjectPointers3 dd offset cs3, offset ge8, offset ge6, offset gpe3, offset mth105
+                    dd offset ge9, offset cst4, offset cce105, offset cs26, offset cs8
+
+    subjectPointers4 dd offset bsm312, offset cs6, offset bsm222, offset mth103, offset hci101
+                    dd offset cs8, offset gpe4, offset cce104, offset cst5, offset ge11, offset ge15
+
+    subjectPointers5 dd offset cse10, offset cs12, offset ge11, offset phys101, offset bsm325
+                    dd offset cst9, offset cse7, offset ge15, offset ge20, offset uge2
+
+    subjectPointers6 dd offset cs15, offset ge20, offset cse13, offset uge2, offset phys102
+                    dd offset cst14, offset cs17, offset cs11
+
+    subjectPointers7 dd offset cs16, offset cs20
+
+    subjectPointers8 dd offset cs18, offset cce106, offset caed500c, offset cs21, offset cs24
+                    dd offset cs19
+
+    subjectPointers9 dd offset cs23, offset cs22
+    
+
+    choices db 100 dup(?)
+    accountNumIn db 100 dup(?)
+    studNameIn db 100 dup(?)
+    yearIn db 100 dup(?)
+    subject db 100 dup(?)
+    sub1to3 dd 3, 6, 3, 3, 2, 3, 3, 3, 3, 3, 3 
+    sub4to6 dd 6, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3 
+    sub7to9 dd 3, 3, 3, 2, 3, 3, 3, 3, 3, 3  
+    sub10to12 dd 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3  
+    sub13to15 dd 3, 3, 3, 4, 3, 3, 3, 3, 3, 3  
+    sub16to18 dd 3, 3, 3, 3, 4, 3, 3, 3  
+    sub19to20 dd 6, 3  
+    sub21to23 dd 3, 3, 3, 3, 4, 3  
+    sub24to25 dd 6, 3  
     

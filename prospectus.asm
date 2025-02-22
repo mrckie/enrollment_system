@@ -1,8 +1,7 @@
-
 .CODE
 
 prospectus PROC
-	invoke StdOut, addr newline 
+    invoke StdOut, addr newline 
     invoke StdOut, addr newline 
     invoke StdOut, addr studentEval
     invoke StdOut, addr horLine
@@ -27,5 +26,5 @@ prospectus PROC
     call fourthYrSecondSemTable
     invoke StdOut, addr horLine
     invoke StdOut, addr newline
-	ret
+    ret
 prospectus ENDP
