@@ -8,7 +8,7 @@
     year db  9, "Year: ", 0
     program db 9, "Program: Bachelor of Science in Computer Science", 0
     department db 10, 9, "Department: College of Computing Education", 0
-    selectPrompt1 db 10, 9, "Select Year and Semester: ", 10, 9,
+    selectPrompt1 db 10, 9, "Select Year and Semester to Enroll: ", 10, 9,
                  "[a] 1st Year / 1st Sem", 10, 9,
                  "[b] 1st Year / 2nd Sem", 10, 9,
                  "[c] 2nd Year / 1st Sem", 10, 9,
@@ -18,14 +18,14 @@
                  "[g] 3rd Year / Summer", 10, 9, 
                  "[h] 4th Year / 1st Sem", 10, 9, 0
 	selectPrompt2 db "[i] 4th Year / 2nd Sem", 10, 9, 0
-	subjectPrompt db 10, 10, 9, "Select the Subject [Letter] to Enroll separated by spaces: ", 0
+	subjectPrompt db 10, 10, 9, "Enlist the Subject [Letter] separated by spaces: ", 0
     newline db 10, 10, 0
     tab db 9, 0
    
     header db 10, 9, "|   Title   |  Unit |                    Description                    |  Pre/Co-requisites  |", 0
     totalUnitsEnrolled dd 0
     tempTotalUnitsEnrolled db 100 dup(?)
-    invalidInputtMsg db 10, 10, 9, "Invalid input! Please enter the correct subject letter", 10, 0
+    invalidInputMsg db 10, 10, 9, "Invalid input! Please enter the correct subject letter", 10, 0
     limitedUnitsMsg db 10, 10, 9, "You have reached the maximum number of units!", 10, 0
 	
     ; title = 11 (excluded vertical tab) char
@@ -128,9 +128,9 @@
     sub3  db 10, 9, "[C] NSTP 1             [F] GE 4               [I] GE 5", 0
 
 
-    sub4 db 10, 9, "[A] UGE               [D] GPE 2              [G] NSTP 2             [J] GE 6", 0
+    sub4 db 10, 9, "[A] UGE 1              [D] GPE 2              [G] NSTP 2             [J] GE 6", 0
     sub5 db 10, 9, "[B] GE 5               [E] MTH 101            [H] CCE 107            [K] GE 9", 0
-    sub6  db 10, 9, "[C] GE 3               [F] CS 25              [I] GE 8", 0
+    sub6 db 10, 9, "[C] GE 3               [F] CS 25              [I] GE 8", 0
 
     sub7 db 10, 9, "[A] CS 3               [D] GPE 3              [G] CST 4              [J] CS 8", 0
     sub8 db 10, 9, "[B] GE 8               [E] MTH 105            [H] CCE 105            ", 0
