@@ -8,7 +8,7 @@
     year db  9, "Year: ", 0
     program db 9, "Program: Bachelor of Science in Computer Science", 0
     department db 10, 9, "Department: College of Computing Education", 0
-    selectPrompt1 db 10, 9, "Select Year and Semester to Display: ", 10, 9,
+    selectPrompt1 db 10, 9, "Select Year and Semester to Enroll: ", 10, 9,
                  "[a] 1st Year / 1st Sem", 10, 9,
                  "[b] 1st Year / 2nd Sem", 10, 9,
                  "[c] 2nd Year / 1st Sem", 10, 9,
