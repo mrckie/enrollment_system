@@ -12,10 +12,25 @@ include prospectus.asm
 
 .code
 
-start:
-    invoke ClearScreen
 
+start:
+    invoke ClearScreen    
+    invoke StdOut, addr enrollSystem
+    invoke StdOut, addr newline
+
+    invoke StdOut, addr studName
+    invoke StdIn, addr studNameIn, 100
+    invoke StdOut, addr accountNum
+    invoke StdIn, addr accountNumIn, 100
+    invoke StdOut, addr year
+    invoke StdIn, addr yearIn, 100
+    invoke StdOut, addr program
+    invoke StdOut, addr department
+
+    call prospectus
+    
 input_loop:
+
     invoke StdOut, addr selectPrompt1
     invoke StdOut, addr selectPrompt2
     invoke StdIn, addr choices, 100
@@ -24,82 +39,75 @@ input_loop:
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call firstYrFirstSemEnroll
+        call firstYrFirstSemTable
+        invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        call selectToEnrollFirstYrFirstSem
 
     .elseif choices == "B" || choices == "b"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call firstYrSecondSemEnroll
+        call firstYrSecondSemTable
+        invoke StdOut, addr horLine
         invoke StdOut, addr newline
-
-        call selectToEnrollFirstYrSecondSem
         
     .elseif choices == "C" || choices == "c"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call secondYrFirstSemEnroll
+        call secondYrFirstSemTable
+        invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        call selectToEnrollSecondYrFirstSem
 
      .elseif choices == "D" || choices == "d"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call secondYrSecondSemEnroll
+        call secondYrSecondSemTable
+        invoke StdOut, addr horLine
         invoke StdOut, addr newline
-
-        call selectToEnrollSecondYrSecondSem
 
      .elseif choices == "E" || choices == "e"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call thirdYrFirstSemEnroll
-        invoke StdOut, addr newline  
-        
-        call selectToEnrollThirdYrFirstSem
+        call thirdYrFirstSemTable
+        invoke StdOut, addr horLine
+        invoke StdOut, addr newline
 
      .elseif choices == "F" || choices == "f"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call thirdYrSecondSemEnroll
-        invoke StdOut, addr newline   
-
-        call selectToEnrollThirdYrSecondSem
+        call thirdYrSecondSemTable
+        invoke StdOut, addr horLine
+        invoke StdOut, addr newline
 
      .elseif choices == "G" || choices == "g"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call thirdYrSummerEnroll
-        invoke StdOut, addr newline   
-
-        call selectToEnrollThirdYrSummer
+        call thirdYrSummerTable
+        invoke StdOut, addr horLine
+        invoke StdOut, addr newline
 
      .elseif choices == "H" || choices == "h"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call fourthYrFirstSemEnroll
-        invoke StdOut, addr newline   
-
-        call selectToEnrollFourthYrFirstSem
+        call fourthYrFirstSemTable
+        invoke StdOut, addr horLine
+        invoke StdOut, addr newline
 
     .elseif choices == "I" || choices == "i"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call fourthYrSecondSemEnroll
-        invoke StdOut, addr newline     
-
-        call selectToEnrollFourthYrSecondSem
+        call fourthYrSecondSemTable
+        invoke StdOut, addr horLine
+        invoke StdOut, addr newline
     .else
         jmp input_loop
     .endif

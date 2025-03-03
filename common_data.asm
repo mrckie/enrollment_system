@@ -1,6 +1,6 @@
 
 .DATA
-    enrollSystem db 10, 9, 9, 9, 9, 9, "Student Enrollment System", 10, 10, 0
+    enrollSystem db 10, 9, 9, 9, 9, "University of Mindanao Student Enrollment System", 10, 10, 0
     officiallyEnrolled db 10, 10, 10, 9, 9, 9, 9, "Congratulations! You are officially enrolled", 10, 10, 0
     studentEval db 10, 9, 9, 9, 9, 9, "Student Evaluation Form", 10, 10, 0
     accountNum db  9, "Account Number: ", 0
@@ -8,7 +8,7 @@
     year db  9, "Year: ", 0
     program db 9, "Program: Bachelor of Science in Computer Science", 0
     department db 10, 9, "Department: College of Computing Education", 0
-    selectPrompt1 db 10, 9, "Select Year and Semester to Enroll: ", 10, 9,
+    selectPrompt1 db 10, 9, "Select Year and Semester to Display: ", 10, 9,
                  "[a] 1st Year / 1st Sem", 10, 9,
                  "[b] 1st Year / 2nd Sem", 10, 9,
                  "[c] 2nd Year / 1st Sem", 10, 9,
@@ -20,6 +20,7 @@
 	selectPrompt2 db "[i] 4th Year / 2nd Sem", 10, 9, 0
 	subjectPrompt db 10, 10, 9, "Enlist the Subject [Letter] separated by spaces: ", 0
     newline db 10, 10, 0
+    oneline db 10, 0
     tab db 9, 0
    
     header db 10, 9, "|   Title   |  Unit |                    Description                    |  Pre/Co-requisites  |", 0
@@ -119,9 +120,13 @@
 
 
     fourthYear2ndSem db 10, 9, "|  4th Year / 2nd Sem                                                                         |", 0   
-    cs23 db 10, 9, "|  CS 23  |  6.0  |                 CS THESIS WRITING 2                 |       CS 18/L       |", 0    
-    cs22 db 10, 9, "|  CS 22  |  3.0  |          INFORMATION ASSURANCE AND SECURITY         |       CS 21/L       |", 0    
+    cs23 db 10, 9, "|   CS 23   |  6.0  |                 CS THESIS WRITING 2                 |      CS 18/L      |", 0    
+    cs22 db 10, 9, "|   CS 22   |  3.0  |          INFORMATION ASSURANCE AND SECURITY         |      CS 21/L      |", 0    
 
+
+
+    ; ALL CODES DOWN HERE SHOULD BE DELETED BEFORE YOU SUBMIT THIS FILE
+    
     ;20 char 
     sub1 db 10, 9, "[A] GE 1               [D] CCE 101            [G] CCE 109            [J] GE 3", 0
     sub2 db 10, 9, "[B] GE 2               [E] GPE 1              [H] GE 7               [K] CS25", 0
