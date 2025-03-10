@@ -81,6 +81,8 @@ selectToEnrollFirstYrFirstSem PROC
         mov esi, offset subject    ; Point to the input buffer
         xor ebx, ebx               ; Clear error flag (0 = no errors)
 
+        
+
         ; Parse the input
     parseInput:
         mov al, [esi]
@@ -135,9 +137,8 @@ selectToEnrollFirstYrFirstSem PROC
         je displayError
 
         ; If no errors, display the results
-        invoke ClearScreen 
-
-        invoke StdOut, addr newline
+        invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
         invoke StdOut, addr studName
         invoke StdOut, addr studNameIn
         invoke StdOut, addr oneline
@@ -149,12 +150,14 @@ selectToEnrollFirstYrFirstSem PROC
         invoke StdOut, addr oneline
         invoke StdOut, addr program
         invoke StdOut, addr department
+        invoke StdOut, addr newline
 
 
-        invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
+
+        
 
         ; Reset ESI to the start of the input buffer to re-parse and display subjects
         mov esi, offset subject
@@ -195,7 +198,17 @@ selectToEnrollFirstYrFirstSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
+
 
     displayError:
         ; Display the appropriate error message
@@ -272,20 +285,6 @@ selectToEnrollFirstYrSecondSem PROC
         cmp ebx, 2
         je displayError
 
-        invoke ClearScreen
-        invoke StdOut, addr newline
-        invoke StdOut, addr studName
-        invoke StdOut, addr studNameIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr accountNum
-        invoke StdOut, addr accountNumIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr year
-        invoke StdOut, addr yearIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr program
-        invoke StdOut, addr department
-
         invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine
         invoke StdOut, addr header
@@ -316,7 +315,6 @@ selectToEnrollFirstYrSecondSem PROC
     displayTotalUnits:
         invoke StdOut, addr horLine
         invoke StdOut, addr totalUnits
-
 
         invoke dwtoa, totalUnitsEnrolled, addr tempTotalUnitsEnrolled  
         invoke StdOut, addr tempTotalUnitsEnrolled  
@@ -399,20 +397,6 @@ selectToEnrollSecondYrFirstSem PROC
         je displayError
         cmp ebx, 2
         je displayError
-
-        invoke ClearScreen
-        invoke StdOut, addr newline
-        invoke StdOut, addr studName
-        invoke StdOut, addr studNameIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr accountNum
-        invoke StdOut, addr accountNumIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr year
-        invoke StdOut, addr yearIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr program
-        invoke StdOut, addr department
 
         invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine
@@ -525,20 +509,6 @@ selectToEnrollSecondYrSecondSem PROC
         je displayError
         cmp ebx, 2
         je displayError
-
-        invoke ClearScreen
-        invoke StdOut, addr newline
-        invoke StdOut, addr studName
-        invoke StdOut, addr studNameIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr accountNum
-        invoke StdOut, addr accountNumIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr year
-        invoke StdOut, addr yearIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr program
-        invoke StdOut, addr department
 
         invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine
@@ -653,20 +623,6 @@ selectToEnrollThirdYrFirstSem PROC
         cmp ebx, 2
         je displayError
 
-        invoke ClearScreen
-        invoke StdOut, addr newline
-        invoke StdOut, addr studName
-        invoke StdOut, addr studNameIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr accountNum
-        invoke StdOut, addr accountNumIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr year
-        invoke StdOut, addr yearIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr program
-        invoke StdOut, addr department
-
         invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine
         invoke StdOut, addr header
@@ -779,20 +735,6 @@ selectToEnrollThirdYrSecondSem PROC
         cmp ebx, 2
         je displayError
 
-        invoke ClearScreen
-        invoke StdOut, addr newline
-        invoke StdOut, addr studName
-        invoke StdOut, addr studNameIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr accountNum
-        invoke StdOut, addr accountNumIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr year
-        invoke StdOut, addr yearIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr program
-        invoke StdOut, addr department
-
         invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine
         invoke StdOut, addr header
@@ -903,20 +845,6 @@ selectToEnrollThirdYrSummer PROC
         je displayError
         cmp ebx, 2
         je displayError
-
-        invoke ClearScreen
-        invoke StdOut, addr newline
-        invoke StdOut, addr studName
-        invoke StdOut, addr studNameIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr accountNum
-        invoke StdOut, addr accountNumIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr year
-        invoke StdOut, addr yearIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr program
-        invoke StdOut, addr department
 
         invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine
@@ -1030,20 +958,6 @@ selectToEnrollFourthYrFirstSem PROC
         cmp ebx, 2
         je displayError
 
-        invoke ClearScreen
-        invoke StdOut, addr newline
-        invoke StdOut, addr studName
-        invoke StdOut, addr studNameIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr accountNum
-        invoke StdOut, addr accountNumIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr year
-        invoke StdOut, addr yearIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr program
-        invoke StdOut, addr department
-
         invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine
         invoke StdOut, addr header
@@ -1154,20 +1068,6 @@ selectToEnrollFourthYrSecondSem PROC
         je displayError
         cmp ebx, 2
         je displayError
-
-        invoke ClearScreen  
-        invoke StdOut, addr newline
-        invoke StdOut, addr studName
-        invoke StdOut, addr studNameIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr accountNum
-        invoke StdOut, addr accountNumIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr year
-        invoke StdOut, addr yearIn
-        invoke StdOut, addr oneline
-        invoke StdOut, addr program
-        invoke StdOut, addr department
 
         invoke StdOut, addr officiallyEnrolled
         invoke StdOut, addr horLine

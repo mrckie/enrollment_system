@@ -39,18 +39,20 @@ input_loop:
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call firstYrFirstSemTable
-        invoke StdOut, addr horLine
+        call firstYrFirstSemEnroll
         invoke StdOut, addr newline
 
+        call selectToEnrollFirstYrFirstSem
 
     .elseif choices == "B" || choices == "b"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call firstYrSecondSemTable
-        invoke StdOut, addr horLine
+        call firstYrSecondSemEnroll
         invoke StdOut, addr newline
+
+        call selectToEnrollFirstYrSecondSem
+
         
     .elseif choices == "C" || choices == "c"
         invoke StdOut, addr horLine
@@ -59,6 +61,9 @@ input_loop:
         call secondYrFirstSemTable
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
+
+        call selectToEnrollSecondYrFirstSem
+
 
 
      .elseif choices == "D" || choices == "d"
@@ -69,48 +74,57 @@ input_loop:
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
+        call selectToEnrollSecondYrSecondSem
+
      .elseif choices == "E" || choices == "e"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call thirdYrFirstSemTable
-        invoke StdOut, addr horLine
-        invoke StdOut, addr newline
+        call thirdYrFirstSemEnroll
+        invoke StdOut, addr newline  
+        
+        call selectToEnrollThirdYrFirstSem
 
      .elseif choices == "F" || choices == "f"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call thirdYrSecondSemTable
-        invoke StdOut, addr horLine
-        invoke StdOut, addr newline
+        call thirdYrSecondSemEnroll
+        invoke StdOut, addr newline   
+
+        call selectToEnrollThirdYrSecondSem
 
      .elseif choices == "G" || choices == "g"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call thirdYrSummerTable
-        invoke StdOut, addr horLine
-        invoke StdOut, addr newline
+        call thirdYrSummerEnroll
+        invoke StdOut, addr newline   
+
+        call selectToEnrollThirdYrSummer
 
      .elseif choices == "H" || choices == "h"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call fourthYrFirstSemTable
-        invoke StdOut, addr horLine
-        invoke StdOut, addr newline
+        call fourthYrFirstSemEnroll
+        invoke StdOut, addr newline   
+
+        call selectToEnrollFourthYrFirstSem
 
     .elseif choices == "I" || choices == "i"
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call fourthYrSecondSemTable
-        invoke StdOut, addr horLine
-        invoke StdOut, addr newline
+        call fourthYrSecondSemEnroll
+        invoke StdOut, addr newline     
+
+        call selectToEnrollFourthYrSecondSem
     .else
         jmp input_loop
     .endif
 
-    invoke ExitProcess, 0
+ 
+
+
 end start
