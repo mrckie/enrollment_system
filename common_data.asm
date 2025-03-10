@@ -9,14 +9,14 @@
     program db 9, "Program: Bachelor of Science in Computer Science", 0
     department db 10, 9, "Department: College of Computing Education", 0
     selectPrompt1 db 10, 9, "Select Year and Semester to Enroll: ", 10, 9,
-                 "[a] 1st Year / 1st Sem", 10, 9,
-                 "[b] 1st Year / 2nd Sem", 10, 9,
-                 "[c] 2nd Year / 1st Sem", 10, 9,
-                 "[d] 2nd Year / 2nd Sem", 10, 9, 
-                 "[e] 3rd Year / 1st Sem", 10, 9, 
-                 "[f] 3rd Year / 2nd Sem", 10, 9, 
-                 "[g] 3rd Year / Summer", 10, 9, 
-                 "[h] 4th Year / 1st Sem", 10, 9, 0
+                 "[A] 1st Year / 1st Sem", 10, 9,
+                 "[B] 1st Year / 2nd Sem", 10, 9,
+                 "[C] 2nd Year / 1st Sem", 10, 9,
+                 "[D] 2nd Year / 2nd Sem", 10, 9, 
+                 "[E] 3rd Year / 1st Sem", 10, 9, 
+                 "[F] 3rd Year / 2nd Sem", 10, 9, 
+                 "[G] 3rd Year / Summer", 10, 9, 
+                 "[H] 4th Year / 1st Sem", 10, 9, 0
 	selectPrompt2 db "[i] 4th Year / 2nd Sem", 10, 9, 0
 	subjectPrompt db 10, 10, 9, "Enlist the Subject [Letter] separated by spaces: ", 0
     newline db 10, 10, 0
@@ -28,6 +28,10 @@
     tempTotalUnitsEnrolled db 100 dup(?)
     invalidInputMsg db 10, 10, 9, "Invalid input! Please enter the correct subject letter", 10, 0
     limitedUnitsMsg db 10, 10, 9, "You have reached the maximum number of units!", 10, 0
+    exit db 10, 9, "You successfully logout.", 0
+    logInOrOut db 10, 9, "Select to continue: ", 10, 9, 
+    "[J] Login another account to enroll", 10, 9,
+    "[K] Logout", 10, 9, 0
 	
     ; title = 11 (excluded vertical tab) char
     ; unit = 7 (excluded vertical tab) char

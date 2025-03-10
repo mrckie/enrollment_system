@@ -52,6 +52,7 @@ input_loop:
         invoke StdOut, addr newline
 
         call selectToEnrollFirstYrSecondSem
+
         
     .elseif choices == "C" || choices == "c"
         invoke StdOut, addr horLine
@@ -62,6 +63,8 @@ input_loop:
         invoke StdOut, addr newline
 
         call selectToEnrollSecondYrFirstSem
+
+
 
      .elseif choices == "D" || choices == "d"
         invoke StdOut, addr horLine
@@ -120,8 +123,8 @@ input_loop:
     .else
         jmp input_loop
     .endif
-        jmp input_loop
 
-        invoke ExitProcess, 0   
+ 
+
 
 end start

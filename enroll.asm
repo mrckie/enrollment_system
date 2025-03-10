@@ -81,6 +81,8 @@ selectToEnrollFirstYrFirstSem PROC
         mov esi, offset subject    ; Point to the input buffer
         xor ebx, ebx               ; Clear error flag (0 = no errors)
 
+        
+
         ; Parse the input
     parseInput:
         mov al, [esi]
@@ -136,9 +138,26 @@ selectToEnrollFirstYrFirstSem PROC
 
         ; If no errors, display the results
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+
+
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
+
+        
 
         ; Reset ESI to the start of the input buffer to re-parse and display subjects
         mov esi, offset subject
@@ -179,7 +198,17 @@ selectToEnrollFirstYrFirstSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
+
 
     displayError:
         ; Display the appropriate error message
