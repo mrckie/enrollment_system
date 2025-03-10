@@ -122,10 +122,6 @@
     fourthYear2ndSem db 10, 9, "|  4th Year / 2nd Sem                                                                         |", 0   
     cs23 db 10, 9, "|   CS 23   |  6.0  |                 CS THESIS WRITING 2                 |      CS 18/L      |", 0    
     cs22 db 10, 9, "|   CS 22   |  3.0  |          INFORMATION ASSURANCE AND SECURITY         |      CS 21/L      |", 0    
-
-
-
-    ; ALL CODES DOWN HERE SHOULD BE DELETED BEFORE YOU SUBMIT THIS FILE
     
     ;20 char 
     sub1 db 10, 9, "[A] GE 1               [D] CCE 101            [G] CCE 109            [J] GE 3", 0

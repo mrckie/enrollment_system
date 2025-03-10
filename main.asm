@@ -107,10 +107,12 @@ input_loop:
         invoke StdOut, addr horLine
         call fourthYrSecondSemTable
         invoke StdOut, addr horLine
-        invoke StdOut, addr newline
+        invoke StdOut, addr newline 
     .else
         jmp input_loop
     .endif
+        jmp input_loop
 
-    invoke ExitProcess, 0
+        invoke ExitProcess, 0   
+
 end start
