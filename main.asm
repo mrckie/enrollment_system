@@ -58,8 +58,7 @@ input_loop:
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call secondYrFirstSemTable
-        invoke StdOut, addr horLine
+        call secondYrFirstSemEnroll
         invoke StdOut, addr newline
 
         call selectToEnrollSecondYrFirstSem
@@ -70,8 +69,7 @@ input_loop:
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
-        call secondYrSecondSemTable
-        invoke StdOut, addr horLine
+        call secondYrSecondSemEnroll
         invoke StdOut, addr newline
 
         call selectToEnrollSecondYrSecondSem

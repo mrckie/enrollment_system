@@ -156,6 +156,8 @@ selectToEnrollFirstYrFirstSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
+        invoke StdOut, addr firstYear1stSem
+        invoke StdOut, addr horLine
 
         
 
@@ -286,8 +288,24 @@ selectToEnrollFirstYrSecondSem PROC
         je displayError
 
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+
         invoke StdOut, addr horLine
         invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        invoke StdOut, addr firstYear2ndSem
         invoke StdOut, addr horLine
 
         mov esi, offset subject
@@ -322,7 +340,16 @@ selectToEnrollFirstYrSecondSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
 
     displayError:
         cmp ebx, 1
@@ -399,8 +426,25 @@ selectToEnrollSecondYrFirstSem PROC
         je displayError
 
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+
+
         invoke StdOut, addr horLine
         invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        invoke StdOut, addr secondYear1stSem
         invoke StdOut, addr horLine
 
         mov esi, offset subject
@@ -435,7 +479,16 @@ selectToEnrollSecondYrFirstSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
 
     displayError:
         cmp ebx, 1
@@ -510,9 +563,26 @@ selectToEnrollSecondYrSecondSem PROC
         cmp ebx, 2
         je displayError
 
+       
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+
         invoke StdOut, addr horLine
         invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        invoke StdOut, addr secondYear2ndSem
         invoke StdOut, addr horLine
 
         mov esi, offset subject
@@ -547,7 +617,16 @@ selectToEnrollSecondYrSecondSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
 
     displayError:
         cmp ebx, 1
@@ -623,9 +702,26 @@ selectToEnrollThirdYrFirstSem PROC
         cmp ebx, 2
         je displayError
 
+       
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+
         invoke StdOut, addr horLine
         invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        invoke StdOut, addr thirdYear1stSem
         invoke StdOut, addr horLine
 
         mov esi, offset subject
@@ -660,7 +756,16 @@ selectToEnrollThirdYrFirstSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
 
     displayError:
         cmp ebx, 1
@@ -735,9 +840,26 @@ selectToEnrollThirdYrSecondSem PROC
         cmp ebx, 2
         je displayError
 
+        
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+
         invoke StdOut, addr horLine
         invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        invoke StdOut, addr thirdYear2ndSem
         invoke StdOut, addr horLine
 
         mov esi, offset subject
@@ -772,7 +894,16 @@ selectToEnrollThirdYrSecondSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
 
     displayError:
         cmp ebx, 1
@@ -846,9 +977,26 @@ selectToEnrollThirdYrSummer PROC
         cmp ebx, 2
         je displayError
 
+        
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+
         invoke StdOut, addr horLine
         invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        invoke StdOut, addr thirdYearSummer
         invoke StdOut, addr horLine
 
         mov esi, offset subject
@@ -883,7 +1031,16 @@ selectToEnrollThirdYrSummer PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
 
     displayError:
         cmp ebx, 1
@@ -958,9 +1115,26 @@ selectToEnrollFourthYrFirstSem PROC
         cmp ebx, 2
         je displayError
 
+        
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+
         invoke StdOut, addr horLine
         invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        invoke StdOut, addr fourthYear1stSem
         invoke StdOut, addr horLine
 
         mov esi, offset subject
@@ -995,7 +1169,16 @@ selectToEnrollFourthYrFirstSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
 
     displayError:
         cmp ebx, 1
@@ -1069,9 +1252,26 @@ selectToEnrollFourthYrSecondSem PROC
         cmp ebx, 2
         je displayError
 
+        
         invoke StdOut, addr officiallyEnrolled
+        invoke StdOut, addr oneline
+        invoke StdOut, addr studName
+        invoke StdOut, addr studNameIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr accountNum
+        invoke StdOut, addr accountNumIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr year
+        invoke StdOut, addr yearIn
+        invoke StdOut, addr oneline
+        invoke StdOut, addr program
+        invoke StdOut, addr department
+        invoke StdOut, addr newline
+        
         invoke StdOut, addr horLine
         invoke StdOut, addr header
+        invoke StdOut, addr horLine
+        invoke StdOut, addr fourthYear2ndSem
         invoke StdOut, addr horLine
 
         mov esi, offset subject
@@ -1106,7 +1306,16 @@ selectToEnrollFourthYrSecondSem PROC
         invoke StdOut, addr horLine
         invoke StdOut, addr newline
 
-        invoke ExitProcess, 0
+        invoke StdOut, addr logInOrOut
+        invoke StdIn, addr choices, 100
+
+        .if choices == "J" || choices == "j"
+            jmp start
+        .elseif choices == "K" || choices == "k"
+            invoke StdOut, addr exit
+            invoke StdOut, addr newline
+            invoke ExitProcess, 0   
+        .endif
 
     displayError:
         cmp ebx, 1
