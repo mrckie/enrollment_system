@@ -33,6 +33,7 @@ input_loop:
 
     invoke StdOut, addr selectPrompt1
     invoke StdOut, addr selectPrompt2
+    invoke StdOut, addr selectPrompt3
     invoke StdIn, addr choices, 100
 
     .if choices == "A" || choices == "a"
@@ -118,11 +119,17 @@ input_loop:
         invoke StdOut, addr newline     
 
         call selectToEnrollFourthYrSecondSem
+
+    .elseif choices == "Q" || choices == "q"
+        invoke StdOut, addr exit
+        invoke StdOut, addr oneline
+        invoke ExitProcess, 0
+
+        
     .else
+        invoke StdOut, addr invalidMenu
         jmp input_loop
     .endif
-
- 
 
 
 end start

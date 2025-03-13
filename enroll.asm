@@ -67,12 +67,10 @@ fourthYrSecondSemEnroll PROC
 fourthYrSecondSemEnroll ENDP
 
 
-
 selectToEnrollFirstYrFirstSem PROC
-    invoke StdOut, addr sub1
-    invoke StdOut, addr sub2
-    invoke StdOut, addr sub3
-
+        invoke StdOut, addr sub1
+        invoke StdOut, addr sub2
+        invoke StdOut, addr sub3
 
     enrollLoop:
         invoke StdOut, addr subjectPrompt
@@ -80,10 +78,9 @@ selectToEnrollFirstYrFirstSem PROC
         mov totalUnitsEnrolled, 0  ; Initialize total units enrolled to 0
         mov esi, offset subject    ; Point to the input buffer
         xor ebx, ebx               ; Clear error flag (0 = no errors)
+        mov subjectBitmask, 0      ; Clear the bitmask
 
-        
-
-        ; Parse the input
+    ; Parse the input
     parseInput:
         mov al, [esi]
         inc esi
@@ -109,17 +106,35 @@ selectToEnrollFirstYrFirstSem PROC
         sub al, 'A'
         movzx eax, al  ; Zero-extend AL to EAX
 
-        ; Retrieve and add the corresponding subject units
+        ; Check for duplicate entry using the bitmask FIRST
+        mov ecx, eax   ; Save the index in ECX
+        mov edx, 1     ; Prepare to check the bit
+        shl edx, cl    ; Shift 1 left by the index (e.g., A=1, B=2, C=4, etc.)
+        test subjectBitmask, edx  ; Check if this bit is already set
+        jnz duplicateEntry        ; If bit is set, it's a duplicate
+
+        ; Mark subject as used
+        or subjectBitmask, edx    ; Set the bit in the bitmask
+
+        ; Retrieve the corresponding subject units
         mov edi, offset sub1to3
         mov ecx, [edi + eax * 4]  ; Get units
-        add totalUnitsEnrolled, ecx  ; Add to total units
 
-        ; Check if total units exceed 26
-        cmp totalUnitsEnrolled, 26
-        jg unitLimitExceeded
+        ; Check if adding this subject will exceed the 26-unit limit
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded  ; If it exceeds, jump to unit limit error
+
+        ; Now safely add the units
+        add totalUnitsEnrolled, ecx  
 
         ; Move to next character
         jmp parseInput
+
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
 
     invalidInput:
         mov ebx, 1  ; Set error flag (invalid input)
@@ -152,14 +167,11 @@ selectToEnrollFirstYrFirstSem PROC
         invoke StdOut, addr department
         invoke StdOut, addr newline
 
-
         invoke StdOut, addr horLine
         invoke StdOut, addr header
         invoke StdOut, addr horLine
         invoke StdOut, addr firstYear1stSem
         invoke StdOut, addr horLine
-
-        
 
         ; Reset ESI to the start of the input buffer to re-parse and display subjects
         mov esi, offset subject
@@ -211,7 +223,6 @@ selectToEnrollFirstYrFirstSem PROC
             invoke ExitProcess, 0   
         .endif
 
-
     displayError:
         ; Display the appropriate error message
         cmp ebx, 1
@@ -241,7 +252,9 @@ selectToEnrollFirstYrSecondSem PROC
         invoke StdIn, addr subject, sizeof subject
         mov totalUnitsEnrolled, 0  
         mov esi, offset subject    
-        xor ebx, ebx               
+        xor ebx, ebx              
+        mov subjectBitmask, 0      
+ 
 
         
     parseInput:
@@ -263,15 +276,30 @@ selectToEnrollFirstYrSecondSem PROC
 
         sub al, 'A'
         movzx eax, al 
+         
+        mov ecx, eax  
+        mov edx, 1     
+        shl edx, cl    
+        test subjectBitmask, edx  
+        jnz duplicateEntry      
+        or subjectBitmask, edx    
 
         mov edi, offset sub4to6
         mov ecx, [edi + eax * 4] 
+          
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded 
+
+      
         add totalUnitsEnrolled, ecx  
 
-        cmp totalUnitsEnrolled, 26
-        jg unitLimitExceeded
-
         jmp parseInput
+
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
 
     invalidInput:
         mov ebx, 1
@@ -370,7 +398,7 @@ selectToEnrollFirstYrSecondSem ENDP
 
 
 selectToEnrollSecondYrFirstSem PROC
-  invoke StdOut, addr sub7
+    invoke StdOut, addr sub7
     invoke StdOut, addr sub8
     invoke StdOut, addr sub9
 
@@ -380,6 +408,7 @@ selectToEnrollSecondYrFirstSem PROC
         mov totalUnitsEnrolled, 0  
         mov esi, offset subject    
         xor ebx, ebx               
+        mov subjectBitmask, 0   
 
         
     parseInput:
@@ -402,14 +431,30 @@ selectToEnrollSecondYrFirstSem PROC
         sub al, 'A'
         movzx eax, al 
 
+        mov ecx, eax   
+        mov edx, 1     
+        shl edx, cl   
+        test subjectBitmask, edx
+        jnz duplicateEntry      
+
+        or subjectBitmask, edx    
+
         mov edi, offset sub7to9
         mov ecx, [edi + eax * 4] 
+      
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded 
+
+      
         add totalUnitsEnrolled, ecx  
 
-        cmp totalUnitsEnrolled, 26
-        jg unitLimitExceeded
-
         jmp parseInput
+
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
 
     invalidInput:
         mov ebx, 1
@@ -517,7 +562,8 @@ selectToEnrollSecondYrSecondSem PROC
         invoke StdIn, addr subject, sizeof subject
         mov totalUnitsEnrolled, 0  
         mov esi, offset subject    
-        xor ebx, ebx               
+        xor ebx, ebx              
+        mov subjectBitmask, 0       
 
         
     parseInput:
@@ -540,14 +586,29 @@ selectToEnrollSecondYrSecondSem PROC
         sub al, 'A'
         movzx eax, al 
 
+        mov ecx, eax  
+        mov edx, 1     
+        shl edx, cl    
+        test subjectBitmask, edx  
+        jnz duplicateEntry      
+        or subjectBitmask, edx    
+
         mov edi, offset sub10to12
         mov ecx, [edi + eax * 4] 
+
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded 
+
+      
         add totalUnitsEnrolled, ecx  
 
-        cmp totalUnitsEnrolled, 26
-        jg unitLimitExceeded
-
         jmp parseInput
+
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
 
     invalidInput:
         mov ebx, 1
@@ -657,6 +718,7 @@ selectToEnrollThirdYrFirstSem PROC
         mov totalUnitsEnrolled, 0  
         mov esi, offset subject    
         xor ebx, ebx               
+        mov subjectBitmask, 0     
 
         
     parseInput:
@@ -679,14 +741,30 @@ selectToEnrollThirdYrFirstSem PROC
         sub al, 'A'
         movzx eax, al 
 
+        mov ecx, eax  
+        mov edx, 1     
+        shl edx, cl    
+        test subjectBitmask, edx  
+        jnz duplicateEntry      
+        or subjectBitmask, edx    
+
+
         mov edi, offset sub13to15
         mov ecx, [edi + eax * 4] 
+
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded 
+
+      
         add totalUnitsEnrolled, ecx  
 
-        cmp totalUnitsEnrolled, 25
-        jg unitLimitExceeded
-
         jmp parseInput
+
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
 
     invalidInput:
         mov ebx, 1
@@ -785,7 +863,7 @@ selectToEnrollThirdYrFirstSem PROC
 selectToEnrollThirdYrFirstSem ENDP
 
 selectToEnrollThirdYrSecondSem PROC
-  invoke StdOut, addr sub16
+    invoke StdOut, addr sub16
     invoke StdOut, addr sub17
     invoke StdOut, addr sub18
 
@@ -794,7 +872,8 @@ selectToEnrollThirdYrSecondSem PROC
         invoke StdIn, addr subject, sizeof subject
         mov totalUnitsEnrolled, 0  
         mov esi, offset subject    
-        xor ebx, ebx               
+        xor ebx, ebx             
+        mov subjectBitmask, 0  
 
         
     parseInput:
@@ -817,14 +896,29 @@ selectToEnrollThirdYrSecondSem PROC
         sub al, 'A'
         movzx eax, al 
 
+        mov ecx, eax  
+        mov edx, 1     
+        shl edx, cl    
+        test subjectBitmask, edx  
+        jnz duplicateEntry      
+        or subjectBitmask, edx    
+
         mov edi, offset sub16to18
         mov ecx, [edi + eax * 4] 
+      
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded 
+
+      
         add totalUnitsEnrolled, ecx  
 
-        cmp totalUnitsEnrolled, 25
-        jg unitLimitExceeded
-
         jmp parseInput
+
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
 
     invalidInput:
         mov ebx, 1
@@ -931,7 +1025,8 @@ selectToEnrollThirdYrSummer PROC
         invoke StdIn, addr subject, sizeof subject
         mov totalUnitsEnrolled, 0  
         mov esi, offset subject    
-        xor ebx, ebx               
+        xor ebx, ebx              
+        mov subjectBitmask, 0 
 
         
     parseInput:
@@ -954,14 +1049,29 @@ selectToEnrollThirdYrSummer PROC
         sub al, 'A'
         movzx eax, al 
 
+        mov ecx, eax  
+        mov edx, 1     
+        shl edx, cl    
+        test subjectBitmask, edx  
+        jnz duplicateEntry      
+        or subjectBitmask, edx   
+
         mov edi, offset sub19to20
         mov ecx, [edi + eax * 4] 
+
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded 
+
+      
         add totalUnitsEnrolled, ecx  
 
-        cmp totalUnitsEnrolled, 9
-        jg unitLimitExceeded
-
         jmp parseInput
+
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
 
     invalidInput:
         mov ebx, 1
@@ -1069,7 +1179,8 @@ selectToEnrollFourthYrFirstSem PROC
         invoke StdIn, addr subject, sizeof subject
         mov totalUnitsEnrolled, 0  
         mov esi, offset subject    
-        xor ebx, ebx               
+        xor ebx, ebx           
+        mov subjectBitmask, 0    
 
         
     parseInput:
@@ -1092,14 +1203,28 @@ selectToEnrollFourthYrFirstSem PROC
         sub al, 'A'
         movzx eax, al 
 
+        mov ecx, eax  
+        mov edx, 1     
+        shl edx, cl    
+        test subjectBitmask, edx  
+        jnz duplicateEntry      
+        or subjectBitmask, edx    
+
         mov edi, offset sub21to23
         mov ecx, [edi + eax * 4] 
+        
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded 
+
         add totalUnitsEnrolled, ecx  
 
-        cmp totalUnitsEnrolled, 19
-        jg unitLimitExceeded
-
         jmp parseInput
+
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
 
     invalidInput:
         mov ebx, 1
@@ -1206,7 +1331,8 @@ selectToEnrollFourthYrSecondSem PROC
         invoke StdIn, addr subject, sizeof subject
         mov totalUnitsEnrolled, 0  
         mov esi, offset subject    
-        xor ebx, ebx               
+        xor ebx, ebx       
+        mov subjectBitmask, 0        
 
         
     parseInput:
@@ -1229,15 +1355,28 @@ selectToEnrollFourthYrSecondSem PROC
         sub al, 'A'
         movzx eax, al 
 
+        mov ecx, eax  
+        mov edx, 1     
+        shl edx, cl    
+        test subjectBitmask, edx  
+        jnz duplicateEntry      
+        or subjectBitmask, edx    
+
         mov edi, offset sub24to25
         mov ecx, [edi + eax * 4] 
-        add totalUnitsEnrolled, ecx  
 
-        cmp totalUnitsEnrolled, 9
-        jg unitLimitExceeded
+        mov edx, totalUnitsEnrolled
+        add edx, ecx
+        cmp edx, 26
+        jg unitLimitExceeded 
+
+        add totalUnitsEnrolled, ecx  
 
         jmp parseInput
 
+    duplicateEntry:
+        invoke StdOut, addr duplicateEntryMsg  
+        jmp enrollLoop
     invalidInput:
         mov ebx, 1
         jmp checkUnitLimit

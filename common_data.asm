@@ -17,8 +17,9 @@
                  "[F] 3rd Year / 2nd Sem", 10, 9, 
                  "[G] 3rd Year / Summer", 10, 9, 
                  "[H] 4th Year / 1st Sem", 10, 9, 0
-	selectPrompt2 db "[i] 4th Year / 2nd Sem", 10, 9, 0
-	subjectPrompt db 10, 10, 9, "Enlist the Subject [Letter] separated by spaces: ", 0
+	selectPrompt2 db "[I] 4th Year / 2nd Sem", 10, 9, 0
+	selectPrompt3 db "[Q] Exit", 10, 9, 0
+	subjectPrompt db 10, 10, 9, "Enlist all the Subjects [Letter] separated by spaces: ", 0
     newline db 10, 10, 0
     oneline db 10, 0
     tab db 9, 0
@@ -27,8 +28,11 @@
     totalUnitsEnrolled dd 0
     tempTotalUnitsEnrolled db 100 dup(?)
     invalidInputMsg db 10, 10, 9, "Invalid input! Please enter the correct subject letter", 10, 0
+    invalidMenu db 10, 10, 9, "Invalid input! Please enter the correct menu option", 10, 0
     limitedUnitsMsg db 10, 10, 9, "You have reached the maximum number of units!", 10, 0
     exit db 10, 9, "You successfully logout.", 0
+    subjectBitmask dd 0  ; Bitmask to track entered subjects
+    duplicateEntryMsg db 10, 10, 9, "Duplicate entry! Please enter different subject.", 10, 0
     logInOrOut db 10, 9, "Select to continue: ", 10, 9, 
     "[J] Login another account to enroll", 10, 9,
     "[K] Logout", 10, 9, 0
